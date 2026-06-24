@@ -1,43 +1,54 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-
-    [SerializeField] private float tempSpeed = 5.0f;
-    [SerializeField] private float tempJumpSpeed = 5.0f;
+    [Header("Movement Settings")]
+    [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private float playerJumpForce = 15.0f;
+    [SerializeField] private float playerDodgeForce = 15.0f;
+    [SerializeField] private float playerAirControlMultiplier = 0.5f;
     
-    private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
     private bool _isGrounded;
+    private float _horizontalInput;
 
     private void Awake()
     {
-        if (!TryGetComponent<Rigidbody2D>(out _rb))
+        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
         {
             _rb = gameObject.AddComponent<Rigidbody2D>();
         }
-    }
-    private void Start()
-    {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteRenderer == null)
+        { 
+            Debug.LogWarning("No SpriteRenderer found on the player.");
+        }
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && _isGrounded || Input.GetKey(KeyCode.Space) &&  _isGrounded)
-        {
-            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, tempJumpSpeed);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
+        _horizontalInput = Input.GetAxis("Horizontal");
+        
+        if (_horizontalInput > 0.01f)
             _spriteRenderer.flipX = false;
-            transform.Translate(Vector3.right * tempSpeed * Time.deltaTime  );
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
+        else if (_horizontalInput < -0.01f)
             _spriteRenderer.flipX = true;
-            transform.Translate(Vector3.left * tempSpeed * Time.deltaTime  );
+        
+        if (Input.GetButtonDown("Jump") && _isGrounded)
+        {
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, playerJumpForce);
         }
+    }
+    
+    private void FixedUpdate()
+    {
+        var currentSpeed = _isGrounded ? playerSpeed : playerSpeed * playerAirControlMultiplier;
+        var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
+        _rb.linearVelocity = targetVelocity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
