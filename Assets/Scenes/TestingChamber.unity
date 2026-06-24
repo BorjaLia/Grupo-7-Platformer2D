@@ -685,7 +685,7 @@ Transform:
   m_GameObject: {fileID: 2015849455}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.11833, y: -0.21297002, z: 0}
+  m_LocalPosition: {x: -8.11833, y: -0.24, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -707,6 +707,7 @@ MonoBehaviour:
   playerJumpForce: 8
   playerDodgeForce: 15
   playerAirControlMultiplier: 0.8
+  animator: {fileID: 2015849460}
 --- !u!50 &2015849458
 Rigidbody2D:
   serializedVersion: 5

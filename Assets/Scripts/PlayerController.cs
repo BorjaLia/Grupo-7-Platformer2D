@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerDodgeForce = 15.0f;
     [SerializeField] private float playerAirControlMultiplier = 0.5f;
     
+    [Header("Animator Settings")]
+    [SerializeField] private Animator animator;
+    
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private bool _isGrounded;
@@ -42,6 +45,8 @@ public class PlayerController : MonoBehaviour
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, playerJumpForce);
         }
+        
+        animator.SetFloat("Speed", Mathf.Abs(_rb.linearVelocity.x));
     }
     
     private void FixedUpdate()
