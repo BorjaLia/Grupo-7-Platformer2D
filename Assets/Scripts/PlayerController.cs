@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeed = 4.0f;
     [SerializeField] private float playerJumpForce = 15.0f;
     [SerializeField] private float playerDodgeForce = 15.0f;
+    [SerializeField] private float playerHurtForce = 3.0f;
     [SerializeField] private float playerAirControlMultiplier = 0.5f;
     
     [Header("Player Animator")]
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private bool _canMove;
     private Light2D _playerLight;
     private Transform _lightPivot; 
+    private bool _isHurt = false;
+    private float _hurtTimer = 0.2f;
 
     private void Awake()
     {
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_canMove) return;
+        if (_isHurt) return;
         
         var currentSpeed = _isGrounded ? playerSpeed : playerSpeed * playerAirControlMultiplier;
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
@@ -99,6 +103,17 @@ public class PlayerController : MonoBehaviour
         if (_lightPivot == null) return;
         var facingDirection = _spriteRenderer.flipX ? -1f : 1f;
         _lightPivot.localScale = new Vector3(facingDirection, 1f, 1f);
+    }
+
+    public void DmgBounce(Vector2 direction)
+    {
+        _rb.linearVelocity = new Vector2(direction.x * playerHurtForce, _rb.linearVelocity.y);
+        _isHurt = true;
+        Invoke(nameof(ResetHurt), _hurtTimer);
+    }
+    private void ResetHurt()
+    {
+        _isHurt = false;
     }
     
     private void OnCollisionEnter2D(Collision2D collision)

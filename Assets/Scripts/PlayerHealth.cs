@@ -27,9 +27,11 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Vector2 hitDirection)
     {
         currentHealth -= damage;
+        _playerController.DmgBounce(hitDirection);
+        
         if (currentHealth <= 0)
         {
             _playerLight.enabled = false;
