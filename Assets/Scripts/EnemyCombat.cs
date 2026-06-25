@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyCombat : MonoBehaviour
 {
     [SerializeField] private float enemyDamage = 1;
-    [SerializeField] private float attackCooldown = 1f;
+    //[SerializeField] private float attackCooldown = 1f;
     private PlayerHealth _playerHealth;
     
     private void OnCollisionEnter2D(Collision2D collision)

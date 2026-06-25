@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement Settings")]
     [SerializeField] private float playerSpeed = 4.0f;
     [SerializeField] private float playerJumpForce = 15.0f;
-    [SerializeField] private float playerDodgeForce = 15.0f;
+    //[SerializeField] private float playerDodgeForce = 15.0f;
     [SerializeField] private float playerHurtForce = 3.0f;
     [SerializeField] private float playerAirControlMultiplier = 0.5f;
     
@@ -19,11 +19,11 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+    private Light2D _playerLight;
+    private Transform _lightPivot; 
     private bool _isGrounded;
     private float _horizontalInput;
     private bool _canMove;
-    private Light2D _playerLight;
-    private Transform _lightPivot; 
     private bool _isHurt = false;
     private float _hurtTimer = 0.2f;
 
