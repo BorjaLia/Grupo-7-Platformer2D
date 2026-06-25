@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        _canMove = true;
         _rb = GetComponent<Rigidbody2D>();
         if (_rb == null)
         {
