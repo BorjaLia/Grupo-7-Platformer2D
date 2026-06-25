@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerAttackForce = 10.0f;
     
     [Header("Player Movement Settings")]
-    [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private float playerSpeed = 4.0f;
     [SerializeField] private float playerJumpForce = 15.0f;
     [SerializeField] private float playerDodgeForce = 15.0f;
     [SerializeField] private float playerAirControlMultiplier = 0.5f;
@@ -50,7 +50,8 @@ public class PlayerController : MonoBehaviour
         
         animator.SetFloat("Speed", Mathf.Abs(_rb.linearVelocity.x));
         
-        UpdateFacingDirection(); 
+        UpdateFacingDirection();
+        GetMouseWorldPosition();
     }
     
     private void FixedUpdate()
@@ -59,7 +60,12 @@ public class PlayerController : MonoBehaviour
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
         _rb.linearVelocity = targetVelocity;
     }
-
+    private Vector3 GetMouseWorldPosition() // gets rid of camera frustum error
+    {
+        var mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z; 
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
     
     private void UpdateFacingDirection() // Function That is responsible for switching the sprite and if the character has one the illumination of it 
     {
