@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Light2D _playerLight;
     private Transform _lightPivot; 
+    private PlayerCombat _combat;
     private bool _isGrounded;
     private float _horizontalInput;
     private bool _canMove;
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
         _playerLight = GetComponentInChildren<Light2D>();
         _lightPivot = _playerLight.transform;
         _rb = GetComponent<Rigidbody2D>();
+        _combat = GetComponent<PlayerCombat>();
+        
         if (_rb == null)
         {
             _rb = gameObject.AddComponent<Rigidbody2D>();
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
             playerHealth.onDeath.AddListener(HandleDeath);
         }
         if (_playerLight == null) Debug.LogError("No Light2D found in children of " + gameObject.name);
+        if (_combat == null) Debug.LogError("No PlayerCombat Script found on the player.");
     }
     private void Update()
     {
@@ -59,6 +63,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, playerJumpForce);
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _combat.Attack();
         }
         
         animator.SetFloat("Speed", Mathf.Abs(_rb.linearVelocity.x));
