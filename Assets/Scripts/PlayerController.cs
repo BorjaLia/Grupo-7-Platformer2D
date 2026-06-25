@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
     [Header("Player Animator")]
     [SerializeField] private Animator animator;
     
-    //[Header("References")]
-    
-    
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private bool _isGrounded;
