@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering.VirtualTexturing;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private bool _isGrounded;
     private float _horizontalInput;
+    private bool _canMove;
 
     private void Awake()
     {
@@ -38,9 +40,17 @@ public class PlayerController : MonoBehaviour
         { 
             Debug.LogWarning("No SpriteRenderer found on the player.");
         }
+        
+        PlayerHealth playerHealth = GetComponent<PlayerHealth>(); 
+        if (playerHealth != null)
+        {
+            playerHealth.onDeath.AddListener(HandleDeath);
+        }
     }
     private void Update()
     {
+        if (!_canMove) return;
+        
         _horizontalInput = Input.GetAxis("Horizontal");
         
         if (Input.GetButtonDown("Jump") && _isGrounded)
@@ -56,6 +66,8 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (!_canMove) return;
+        
         var currentSpeed = _isGrounded ? playerSpeed : playerSpeed * playerAirControlMultiplier;
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
         _rb.linearVelocity = targetVelocity;
@@ -66,8 +78,14 @@ public class PlayerController : MonoBehaviour
         mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z; 
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
-    
-    private void UpdateFacingDirection() // Function That is responsible for switching the sprite and if the character has one the illumination of it 
+
+    private void HandleDeath()
+    {
+        _canMove = false;
+        _rb.linearVelocity = Vector2.zero;
+        Debug.Log("Player Died");
+    }
+    private void UpdateFacingDirection() // Function That is responsible for switching the sprite and if the character has a light sprite, switch it too 
     {
         if (_horizontalInput > 0.01f)
         {
