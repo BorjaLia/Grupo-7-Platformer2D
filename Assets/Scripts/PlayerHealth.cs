@@ -1,37 +1,44 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 5f;
-    private float _currentHealth;
+    public float maxHealth = 5f;
+    public float currentHealth;
     
     public UnityEvent onDeath;
+    public SpriteRenderer playerSprite;
+    public PlayerController playerController;
+    public Light2D playerLight;
 
     private void Start()
     {
-        _currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
-        if (_currentHealth <= 0)
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            playerLight.enabled = false;
+            playerSprite.enabled = false;
+            playerController.enabled = false;
+            //gameObject.SetActive(false);
             Death();
         }
     }
 
     public void Heal(float heal)
     {
-        if (_currentHealth + heal >= maxHealth)
+        if (currentHealth + heal >= maxHealth)
         {
-            _currentHealth = maxHealth;
+            currentHealth = maxHealth;
         }
         else
         {
-            _currentHealth += heal;
+            currentHealth += heal;
         }
     }
 

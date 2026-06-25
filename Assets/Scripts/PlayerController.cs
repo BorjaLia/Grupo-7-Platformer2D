@@ -6,10 +6,6 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player Settings")]
-    [SerializeField] private float lives = 5.0f;
-    [SerializeField] private float playerAttackForce = 10.0f;
-    
     [Header("Player Movement Settings")]
     [SerializeField] private float playerSpeed = 4.0f;
     [SerializeField] private float playerJumpForce = 15.0f;
