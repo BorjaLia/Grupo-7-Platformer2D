@@ -8443,8 +8443,9 @@ MonoBehaviour:
   onDeath:
     m_PersistentCalls:
       m_Calls: []
-  playerSprite: {fileID: 0}
-  playerController: {fileID: 0}
+  playerSprite: {fileID: 2015849461}
+  playerController: {fileID: 2015849457}
+  playerLight: {fileID: 1470889466}
 --- !u!114 &2015849463
 MonoBehaviour:
   m_ObjectHideFlags: 0

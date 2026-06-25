@@ -8,10 +8,20 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     
     public UnityEvent onDeath;
-    public SpriteRenderer playerSprite;
-    public PlayerController playerController;
-    public Light2D playerLight;
-
+    private SpriteRenderer _playerSprite;
+    private PlayerController _playerController;
+    private Light2D _playerLight;
+    //public SpriteRenderer playerSprite;
+    //public PlayerController playerController;
+    //public Light2D playerLight;
+    private void Awake()
+    {
+        _playerSprite = GetComponent<SpriteRenderer>();
+        _playerController = GetComponent<PlayerController>();
+        _playerLight = GetComponentInChildren<Light2D>(); 
+        
+        if (_playerLight == null) Debug.LogError("No Light2D found in children of " + gameObject.name);
+    }
     private void Start()
     {
         currentHealth = maxHealth;
@@ -22,10 +32,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            playerLight.enabled = false;
-            playerSprite.enabled = false;
-            playerController.enabled = false;
-            //gameObject.SetActive(false);
+            _playerLight.enabled = false;
+            _playerSprite.enabled = false;
+            _playerController.enabled = false;
             Death();
         }
     }
@@ -46,5 +55,11 @@ public class PlayerHealth : MonoBehaviour
     {
         onDeath.Invoke();
     }
-    
+    public void Respawn()
+    {
+        currentHealth = maxHealth;
+        _playerLight.enabled = true;
+        _playerSprite.enabled = true;
+        _playerController.enabled = true;
+    }
 }
