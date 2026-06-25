@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
@@ -10,13 +11,19 @@ public class HealthDisplay : MonoBehaviour
     [SerializeField] private Sprite filledHealthSprite;
     [SerializeField] private Sprite emptyHealthSprite;
     
-    public PlayerHealth playerHealth;
+    private PlayerHealth _playerHealth;
     public Image[] Hearts;
-    
+
+    private void Awake()
+    {
+        _playerHealth = GetComponent<PlayerHealth>();
+        if (_playerHealth == null) Debug.LogError("No SSCRIPT for _PlayerHealth was FOUND");
+    }
+
     private void Update()
     {
-        currentHealth = playerHealth.currentHealth;
-        maxHealth = playerHealth.maxHealth;
+        currentHealth = _playerHealth.currentHealth;
+        maxHealth = _playerHealth.maxHealth;
         
         for (int i = 0; i < Hearts.Length; i++)
         {

@@ -11,15 +11,15 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer _playerSprite;
     private PlayerController _playerController;
     private Light2D _playerLight;
-    //public SpriteRenderer playerSprite;
-    //public PlayerController playerController;
-    //public Light2D playerLight;
+    
     private void Awake()
     {
         _playerSprite = GetComponent<SpriteRenderer>();
         _playerController = GetComponent<PlayerController>();
         _playerLight = GetComponentInChildren<Light2D>(); 
         
+        if (_playerSprite == null) Debug.LogError("No Sprite was found for Player");
+        if (_playerController == null) Debug.LogError("No Controller Script was found for Player");
         if (_playerLight == null) Debug.LogError("No Light2D found in children of " + gameObject.name);
     }
     private void Start()
