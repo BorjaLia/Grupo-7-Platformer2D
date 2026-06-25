@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.VirtualTexturing;
 
 public class PlayerController : MonoBehaviour
@@ -15,18 +16,22 @@ public class PlayerController : MonoBehaviour
     [Header("Player Animator")]
     [SerializeField] private Animator animator;
     
-    [Header("References")]
-    [SerializeField] private Transform lightPivot; 
+    //[Header("References")]
+    
     
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private bool _isGrounded;
     private float _horizontalInput;
     private bool _canMove;
+    private Light2D _playerLight;
+    private Transform _lightPivot; 
 
     private void Awake()
     {
         _canMove = true;
+        _playerLight = GetComponentInChildren<Light2D>();
+        _lightPivot = _playerLight.transform;
         _rb = GetComponent<Rigidbody2D>();
         if (_rb == null)
         {
@@ -43,6 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth.onDeath.AddListener(HandleDeath);
         }
+        if (_playerLight == null) Debug.LogError("No Light2D found in children of " + gameObject.name);
     }
     private void Update()
     {
@@ -93,9 +99,9 @@ public class PlayerController : MonoBehaviour
             _spriteRenderer.flipX = true;
         }
         
-        if (lightPivot == null) return;
+        if (_lightPivot == null) return;
         var facingDirection = _spriteRenderer.flipX ? -1f : 1f;
-        lightPivot.localScale = new Vector3(facingDirection, 1f, 1f);
+        _lightPivot.localScale = new Vector3(facingDirection, 1f, 1f);
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
