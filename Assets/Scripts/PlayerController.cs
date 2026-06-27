@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerData movementData; 
     [Header("Player Animator")]
     [SerializeField] private Animator animator;
+    [Header("GroundCheck")]
+    [SerializeField] private LayerMask groundLayerMask;
     
     private PlayerData _runTimeMovementData;
     
     private Rigidbody2D _rb;
+    private Transform _groundCheckPoint;
     private SpriteRenderer _spriteRenderer;
     private Light2D _playerLight;
     private Transform _lightPivot; 
@@ -41,12 +44,17 @@ public class PlayerController : MonoBehaviour
         {
             _rb = gameObject.AddComponent<Rigidbody2D>();
         }
+        
         _spriteRenderer = GetComponent<SpriteRenderer>();
         if (_spriteRenderer == null)
         { 
             Debug.LogWarning("No SpriteRenderer found on the player.");
         }
-        
+        _groundCheckPoint = transform.Find("GroundCheckPoint");
+        if (_groundCheckPoint == null)
+        {
+            Debug.LogWarning("GroundCheckPoint child not found! Please create an empty child named GroundCheckPoint.");
+        }
         PlayerHealth playerHealth = GetComponent<PlayerHealth>(); 
         if (playerHealth != null)
         {
@@ -74,8 +82,9 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (!_canMove) return;
-        if (_isHurt) return;
+        if (!_canMove || _isHurt ) return;
+        
+        _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _runTimeMovementData.groundCheckRadius, groundLayerMask);
         
         var currentSpeed = _isGrounded ? _runTimeMovementData.playerSpeed : _runTimeMovementData.playerSpeed * _runTimeMovementData.playerAirControlMultiplier;
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
@@ -121,18 +130,11 @@ public class PlayerController : MonoBehaviour
         _isHurt = false;
     }
     
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmosSelected()
     {
-        if (collision.gameObject.CompareTag("Ground")) 
-        { 
-            _isGrounded = true;
-        }
-    } 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            _isGrounded = false;
-        }
+        if (_groundCheckPoint == null) return;
+        
+        Gizmos.color = _isGrounded ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(_groundCheckPoint.position, _runTimeMovementData.groundCheckRadius);
     }
 }

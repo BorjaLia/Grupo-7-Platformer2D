@@ -17,4 +17,8 @@ MonoBehaviour:
   playerDodgeForce: 15
   playerHurtForce: 3
   playerAirControlMultiplier: 0.8
-  _hurtTimer: 0.2
+  maxHealth: 5
+  hurtTimer: 0.2
+  dodgeTimer: 0.2
+  attackCooldown: 0.2
+  groundCheckRadius: 0.1

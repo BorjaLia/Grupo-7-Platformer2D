@@ -1835,7 +1835,7 @@ GameObject:
   - component: {fileID: 401367924}
   - component: {fileID: 401367923}
   - component: {fileID: 401367925}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: OneWay Tilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3172,7 +3172,7 @@ GameObject:
   - component: {fileID: 664835854}
   - component: {fileID: 664835853}
   - component: {fileID: 664835852}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundTilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -18002,6 +18002,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1976265233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976265234}
+  m_Layer: 0
+  m_Name: GroundCheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1976265234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976265233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0155, y: -0.0843, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2015849456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2002175322
 GameObject:
   m_ObjectHideFlags: 0
@@ -18131,6 +18162,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1470889465}
+  - {fileID: 1976265234}
   m_Father: {fileID: 1348679705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2015849457
@@ -18147,6 +18179,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   movementData: {fileID: 11400000, guid: 56870fee68f4d4a48bff83c0f04e1f5a, type: 2}
   animator: {fileID: 2015849460}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!50 &2015849458
 Rigidbody2D:
   serializedVersion: 5
@@ -18163,7 +18198,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 2.5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 012366f0f77653843a06c85b4b5dd3ce, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -18351,6 +18386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002cdf2859cca0444b249d7a05aca018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  combatData: {fileID: 11400000, guid: 56870fee68f4d4a48bff83c0f04e1f5a, type: 2}
 --- !u!1 &2024826569
 GameObject:
   m_ObjectHideFlags: 0

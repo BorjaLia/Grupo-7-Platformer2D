@@ -9,8 +9,15 @@ public class PlayerData : ScriptableObject
     public float playerDodgeForce = 15.0f;
     public float playerHurtForce = 3.0f;
     public float playerAirControlMultiplier = 0.5f;
-    public float hurtTimer = 0.2f;
     
     [Header("Player Health Settings")]
     public float maxHealth = 5f;
+
+    [Header("Player Cooldown Settings")]
+    public float hurtTimer = 0.2f;
+    public float dodgeTimer = 0.2f;
+    public float attackCooldown = 0.5f;
+    
+    [Header("Player GroundCheck Settings")]
+    public float groundCheckRadius = 0.1f;
 }
