@@ -9,9 +9,15 @@ public class PlayerData : ScriptableObject
     public float playerDodgeForce = 15.0f;
     public float playerHurtForce = 3.0f;
     public float playerAirControlMultiplier = 0.5f;
+    public LayerMask groundLayerMask;
     
     [Header("Player Health Settings")]
     public float maxHealth = 5f;
+
+    [Header("Player Combat Settings")] 
+    public float weaponRange = 0.3f;
+    public float damage = 1.0f;
+    public LayerMask enemyLayer;
 
     [Header("Player Cooldown Settings")]
     public float hurtTimer = 0.2f;

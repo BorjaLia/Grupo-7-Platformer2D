@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerData movementData; 
     [Header("Player Animator")]
     [SerializeField] private Animator animator;
-    [Header("GroundCheck")]
-    [SerializeField] private LayerMask groundLayerMask;
     
     private PlayerData _runTimeMovementData;
     
@@ -84,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!_canMove || _isHurt ) return;
         
-        _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _runTimeMovementData.groundCheckRadius, groundLayerMask);
+        _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _runTimeMovementData.groundCheckRadius, _runTimeMovementData.groundLayerMask);
         
         var currentSpeed = _isGrounded ? _runTimeMovementData.playerSpeed : _runTimeMovementData.playerSpeed * _runTimeMovementData.playerAirControlMultiplier;
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);

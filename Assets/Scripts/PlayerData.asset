@@ -17,7 +17,15 @@ MonoBehaviour:
   playerDodgeForce: 15
   playerHurtForce: 3
   playerAirControlMultiplier: 0.8
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   maxHealth: 5
+  weaponRange: 0.3
+  damage: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   hurtTimer: 0.2
   dodgeTimer: 0.2
   attackCooldown: 0.2
