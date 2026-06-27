@@ -7,15 +7,12 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player Movement Settings")]
-    [SerializeField] private float playerSpeed = 4.0f;
-    [SerializeField] private float playerJumpForce = 15.0f;
-    //[SerializeField] private float playerDodgeForce = 15.0f;
-    [SerializeField] private float playerHurtForce = 3.0f;
-    [SerializeField] private float playerAirControlMultiplier = 0.5f;
-    
+    [Header("Player Data")]
+    [SerializeField] private PlayerData movementData; 
     [Header("Player Animator")]
     [SerializeField] private Animator animator;
+    
+    private PlayerData _runTimeMovementData;
     
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
@@ -26,10 +23,14 @@ public class PlayerController : MonoBehaviour
     private float _horizontalInput;
     private bool _canMove;
     private bool _isHurt = false;
-    private float _hurtTimer = 0.2f;
-
+    
     private void Awake()
     {
+        if (movementData != null)
+            _runTimeMovementData = Instantiate(movementData);
+        else
+            Debug.LogError("Player Movement Data is missing!");
+        
         _canMove = true;
         _playerLight = GetComponentInChildren<Light2D>();
         _lightPivot = _playerLight.transform;
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
-            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, playerJumpForce);
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _runTimeMovementData.playerJumpForce);
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -81,7 +82,7 @@ public class PlayerController : MonoBehaviour
         if (!_canMove) return;
         if (_isHurt) return;
         
-        var currentSpeed = _isGrounded ? playerSpeed : playerSpeed * playerAirControlMultiplier;
+        var currentSpeed = _isGrounded ? _runTimeMovementData.playerSpeed : _runTimeMovementData.playerSpeed * _runTimeMovementData.playerAirControlMultiplier;
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
         _rb.linearVelocity = targetVelocity;
     }
@@ -116,9 +117,9 @@ public class PlayerController : MonoBehaviour
 
     public void DmgBounce(Vector2 direction)
     {
-        _rb.linearVelocity = new Vector2(direction.x * playerHurtForce, _rb.linearVelocity.y);
+        _rb.linearVelocity = new Vector2(direction.x * _runTimeMovementData.playerHurtForce, _rb.linearVelocity.y);
         _isHurt = true;
-        Invoke(nameof(ResetHurt), _hurtTimer);
+        Invoke(nameof(ResetHurt), _runTimeMovementData._hurtTimer);
     }
     private void ResetHurt()
     {
