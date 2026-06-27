@@ -1,15 +1,20 @@
+using System;
 using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
-    public Animator animator;
+     private Animator _animator;
 
-    public void Attack()
+    private void Awake()
     {
-        animator.SetBool("IsAttacking", true);
+        _animator = GetComponent<Animator>();
     }
 
-    public void StopAttacking()
+    private void Update()
     {
-        animator.SetBool("IsAttacking", false);
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _animator.SetTrigger("IsAttacking");
+        }
     }
+
 }

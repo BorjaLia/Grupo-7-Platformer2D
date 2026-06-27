@@ -65,11 +65,6 @@ public class PlayerController : MonoBehaviour
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _runTimeMovementData.playerJumpForce);
         }
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _combat.Attack();
-        }
         
         animator.SetFloat("Speed", Mathf.Abs(_rb.linearVelocity.x));
         
@@ -119,7 +114,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb.linearVelocity = new Vector2(direction.x * _runTimeMovementData.playerHurtForce, _rb.linearVelocity.y);
         _isHurt = true;
-        Invoke(nameof(ResetHurt), _runTimeMovementData._hurtTimer);
+        Invoke(nameof(ResetHurt), _runTimeMovementData.hurtTimer);
     }
     private void ResetHurt()
     {

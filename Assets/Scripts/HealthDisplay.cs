@@ -5,8 +5,8 @@ using Image = UnityEngine.UI.Image;
 
 public class HealthDisplay : MonoBehaviour
 {
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float currentHealth;
+    private float maxHealth;
+    private float currentHealth;
     
     [SerializeField] private Sprite filledHealthSprite;
     [SerializeField] private Sprite emptyHealthSprite;
