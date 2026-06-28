@@ -45,12 +45,8 @@ public class PlayerHealth : MonoBehaviour
         }
         _playerController.DmgBounce(hitDirection);
         
-        
         if (currentHealth <= 0)
         {
-            _playerLight.enabled = false;
-            _playerSprite.enabled = false;
-            _playerController.enabled = false;
             Death();
         }
     }
@@ -69,6 +65,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void Death()
     {
+        _playerLight.enabled = false;
+        _playerSprite.enabled = false;
+        _playerController.enabled = false;
         onDeath.Invoke();
     }
     public void Respawn()

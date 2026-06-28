@@ -15,7 +15,7 @@ MonoBehaviour:
   playerSpeed: 4
   playerJumpForce: 8
   playerDodgeForce: 15
-  playerHurtForce: 3
+  playerHurtForce: 3.5
   playerAirControlMultiplier: 0.8
   groundLayerMask:
     serializedVersion: 2

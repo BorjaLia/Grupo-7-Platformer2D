@@ -52,7 +52,6 @@ public class EnemyLogic : MonoBehaviour
             {
                 UpdateFacingDirection();
             }
-            
             Vector2 direction = (_target.position - transform.position).normalized;
             _rb.linearVelocity = direction * _runTimeEnemyData.speed;
         }
