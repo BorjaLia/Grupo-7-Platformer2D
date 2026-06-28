@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyCombat : MonoBehaviour
 {
     [SerializeField] private float enemyDamage = 1;
+    [SerializeField] private bool instantDeath = false;
     //[SerializeField] private float attackCooldown = 1f;
     private PlayerHealth _playerHealth;
     
@@ -14,7 +15,7 @@ public class EnemyCombat : MonoBehaviour
             if (_playerHealth != null)
             {
                 Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
-                _playerHealth.TakeDamage(enemyDamage, hitDirection);
+                _playerHealth.TakeDamage((instantDeath ? _playerHealth.currentHealth : enemyDamage), hitDirection);
             }
         }
     }
