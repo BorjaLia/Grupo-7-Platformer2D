@@ -2462,13 +2462,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474749695}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 517628404}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &474749697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2879,7 +2879,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.047254145, y: 0}
+  m_Offset: {x: 0.0008468628, y: 0.0035024434}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2889,7 +2889,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.14549172, y: 0.17}
+  m_Size: {x: 0.23830628, y: 0.16299513}
   m_EdgeRadius: 0
 --- !u!212 &517628403
 SpriteRenderer:
@@ -19656,6 +19656,14 @@ PrefabInstance:
       propertyPath: 'Hearts.Array.data[4]'
       value: 
       objectReference: {fileID: 1120285832}
+    - target: {fileID: 7048822064389821489, guid: ef3812695c077df4c9ece3f5fb74c0c0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7048822064389821489, guid: ef3812695c077df4c9ece3f5fb74c0c0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8983362856939140794, guid: ef3812695c077df4c9ece3f5fb74c0c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.11833
