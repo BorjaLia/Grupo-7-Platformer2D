@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class EnemyCombat : MonoBehaviour
 {
-    [SerializeField] private float enemyDamage = 1;
-    //[SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private EnemyData enemyData;
+    private EnemyData _runTimeEnemyData;
     private PlayerHealth _playerHealth;
-    
+
+    private void Awake()
+    {
+        if (enemyData != null)
+            _runTimeEnemyData = Instantiate(enemyData);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -14,16 +20,8 @@ public class EnemyCombat : MonoBehaviour
             if (_playerHealth != null)
             {
                 Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
-                _playerHealth.TakeDamage(enemyDamage, hitDirection);
+                _playerHealth.TakeDamage(_runTimeEnemyData.damage, hitDirection);
             }
         }
     }
-    
-   /* private void OnCollisionEnter2D(Collision2D collision) // simple test of health working
-    {
-        Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
-        if (hitDirection.magnitude < 0.1f) 
-            hitDirection = Vector2.up;
-        collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(enemyDamage, hitDirection);
-    }*/
 }

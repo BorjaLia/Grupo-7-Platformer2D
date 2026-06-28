@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Player Data")]
     [SerializeField] private PlayerData healthData;
     private PlayerData _runTimeHealthData;
-
+    
     public float maxHealth; 
     public float currentHealth;
     public UnityEvent onDeath;
