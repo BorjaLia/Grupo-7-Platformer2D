@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818fdf9d4d4ca7443a2c7e5a0ee93724, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
-  playerSpeed: 4
+  playerSpeed: 8
   playerJumpForce: 12
   playerDodgeForce: 15
   playerHurtForce: 3.5
@@ -21,7 +21,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   maxHealth: 5
-  weaponRange: 0.4
+  weaponRange: 1
   damage: 1
   enemyLayer:
     serializedVersion: 2
