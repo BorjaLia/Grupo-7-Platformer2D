@@ -10,9 +10,11 @@ public class EnemyHealth : MonoBehaviour
     public UnityEvent onDeath;
     
     [SerializeField] private EnemyData enemyData;
+    [SerializeField] private EnemyHealthbarBehaviour healthBar;
     private EnemyLogic _enemyLogic;
     private EnemyData _runTimeEnemyData;
     private Animator _animator;
+    
 
     private void Awake()
     {
@@ -26,11 +28,17 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void Start()
+    {
+        healthBar.SetHealth(currentHealth, maxHealth);
+    }
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth > 0)
         {
+            healthBar.SetHealth(currentHealth, maxHealth);
            _animator.SetTrigger("IsHurt");
         } 
         

@@ -72,7 +72,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public void Respawn()
     {
-        currentHealth = maxHealth;
+         currentHealth = maxHealth;
         _playerLight.enabled = true;
         _playerSprite.enabled = true;
         _playerController.enabled = true;

@@ -21,7 +21,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   maxHealth: 5
-  weaponRange: 0.3
+  weaponRange: 0.4
   damage: 1
   enemyLayer:
     serializedVersion: 2
