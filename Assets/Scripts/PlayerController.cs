@@ -2,8 +2,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.VirtualTexturing;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerData movementData; 
     [Header("Player Animator")]
     [SerializeField] private Animator animator;
+
+    [Header("Canvas Win Element")] 
+    [SerializeField] private Image image;
+    [SerializeField] private TMP_Text textMeshPro;
     
     private PlayerData _runTimeMovementData;
     
@@ -24,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private float _horizontalInput;
     private bool _canMove;
     private bool _isHurt = false;
+    private bool _win = false; 
     private bool _isPaused = false;
     
     private void Awake()
@@ -34,6 +41,9 @@ public class PlayerController : MonoBehaviour
             _runTimeMovementData = Instantiate(movementData);
         else
             Debug.LogError("Player Movement Data is missing!");
+
+        textMeshPro.enabled = false;
+        image.enabled = false;
         
         _canMove = true;
         _playerLight = GetComponentInChildren<Light2D>();
@@ -76,7 +86,11 @@ public class PlayerController : MonoBehaviour
         }
         
         animator.SetFloat("Speed", Mathf.Abs(_rb.linearVelocity.x));
-        
+
+        if (_win == true)
+        {
+            WinCondition();
+        }
         UpdateFacingDirection();
         GetMouseWorldPosition();
     }
@@ -125,7 +139,6 @@ public class PlayerController : MonoBehaviour
         var facingDirection = _spriteRenderer.flipX ? -1f : 1f;
         _lightPivot.localScale = new Vector3(facingDirection, 1f, 1f);
     }
-
     public void DmgBounce(Vector2 direction)
     {
         _rb.linearVelocity = new Vector2(direction.x * _runTimeMovementData.playerHurtForce, _rb.linearVelocity.y);
@@ -135,6 +148,20 @@ public class PlayerController : MonoBehaviour
     private void ResetHurt()
     {
         _isHurt = false;
+    }
+    void OnCollisionStay2D(Collision2D col) {
+
+        if (col.gameObject.tag == "Tent")
+        {
+            _win = true; 
+        }
+
+    }
+
+    private void WinCondition()
+    {
+        textMeshPro.enabled = true;
+        image.enabled = true;
     }
     
     private void OnDrawGizmosSelected()
