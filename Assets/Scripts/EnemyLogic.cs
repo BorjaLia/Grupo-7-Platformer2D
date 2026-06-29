@@ -7,12 +7,15 @@ using UnityEngine.XR;
 public class EnemyLogic : MonoBehaviour
 {
     [SerializeField] private EnemyData enemyData;
+    [SerializeField] private GameObject pointA;
+    [SerializeField] private GameObject pointB;
     
     private Transform _target;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private Light2D _enemyLight;
-    private Transform _lightPivot; 
+    private Transform _lightPivot;
+    private Transform _currentPoint;
     private EnemyData _runTimeEnemyData;
     private Animator _animator;
     private EnemyState _currentState;
@@ -44,10 +47,35 @@ public class EnemyLogic : MonoBehaviour
     private void Start()
     {
         ChangeState(_currentState = EnemyState.idle);
+        _currentPoint = pointB.transform;
     }
 
     private void Update()
     {
+        Vector2 point = _currentPoint.position - transform.position;
+        if (_currentState == EnemyState.idle)
+        {
+            if (_currentPoint == pointB.transform)
+            {
+                _rb.linearVelocity = new Vector2(_runTimeEnemyData.speed, 0);
+            }
+            else
+            {
+                _rb.linearVelocity = new Vector2(-_runTimeEnemyData.speed, 0);
+            }
+
+            if (Vector2.Distance(transform.position, _currentPoint.position) < 0.5f &&
+                _currentPoint == pointB.transform)
+            {
+                _currentPoint = pointA.transform;
+            }
+            if (Vector2.Distance(transform.position, _currentPoint.position) < 0.5f &&
+                _currentPoint == pointA.transform)
+            {
+                _currentPoint = pointB.transform;
+            }
+        }
+
         if (_currentState == EnemyState.chasing)
         {
             if (_target.position.x > transform.position.x && _facingDirection == -1 ||
@@ -124,4 +152,12 @@ public class EnemyLogic : MonoBehaviour
         idle = 0,
         chasing = 1,
     }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
+        Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
+        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+    }
+    
 }
