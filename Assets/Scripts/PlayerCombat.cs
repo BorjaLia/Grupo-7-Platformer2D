@@ -9,12 +9,9 @@ public class PlayerCombat : MonoBehaviour
      private PlayerData _runTimeCombatData;
      private Transform _attackPoint;
      private float _timer;
-    private bool _isPaused = false;
 
     private void Awake()
     {
-        GameManager.OnPauseToggled += OnPause;
-
         _animator = GetComponent<Animator>();
         if (combatData != null)
             _runTimeCombatData = Instantiate(combatData);
@@ -29,8 +26,6 @@ public class PlayerCombat : MonoBehaviour
     
     private void Update()
     {
-        if (_isPaused) return;
-
         if (_timer > 0)
         {
             _timer -= Time.deltaTime;
@@ -39,11 +34,6 @@ public class PlayerCombat : MonoBehaviour
         {
             Attack();
         }
-    }
-
-    private void OnDestroy()
-    {
-        GameManager.OnPauseToggled -= OnPause;
     }
 
     private void Attack()
@@ -64,10 +54,7 @@ public class PlayerCombat : MonoBehaviour
             enemies[0].GetComponent<EnemyHealth>().TakeDamage(_runTimeCombatData.damage);
         }
     }
-    private void OnPause(bool pause)
-    {
-        _isPaused = pause;
-    }
+    
     private void OnDrawGizmosSelected()
     {
         if (_attackPoint == null) return;

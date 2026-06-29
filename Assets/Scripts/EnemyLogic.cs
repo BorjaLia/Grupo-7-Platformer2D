@@ -21,13 +21,9 @@ public class EnemyLogic : MonoBehaviour
     private EnemyState _currentState;
     
     private float _facingDirection = -1;
-
-    private bool _isPaused = false;
     
     private void Awake()
     {
-        GameManager.OnPauseToggled += OnPause;
-
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         
@@ -56,9 +52,6 @@ public class EnemyLogic : MonoBehaviour
 
     private void Update()
     {
-
-        if (_isPaused) return;
-
         Vector2 point = _currentPoint.position - transform.position;
         if (_currentState == EnemyState.idle)
         {
@@ -93,11 +86,6 @@ public class EnemyLogic : MonoBehaviour
             Vector2 direction = (_target.position - transform.position).normalized;
             _rb.linearVelocity = direction * _runTimeEnemyData.speed;
         }
-    }
-
-    private void OnDestroy()
-    {
-        GameManager.OnPauseToggled -= OnPause;
     }
 
     public void DmgBounce(Vector2 direction)
@@ -164,12 +152,7 @@ public class EnemyLogic : MonoBehaviour
         idle = 0,
         chasing = 1,
     }
-
-    private void OnPause(bool pause)
-    {
-        _isPaused = pause;
-    }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);

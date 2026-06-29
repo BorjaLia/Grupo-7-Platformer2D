@@ -24,12 +24,9 @@ public class PlayerController : MonoBehaviour
     private float _horizontalInput;
     private bool _canMove;
     private bool _isHurt = false;
-    private bool _isPaused = false;
     
     private void Awake()
     {
-        GameManager.OnPauseToggled += OnPause;
-
         if (movementData != null)
             _runTimeMovementData = Instantiate(movementData);
         else
@@ -66,7 +63,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (!_canMove || _isPaused) return;
+        if (!_canMove) return;
         
         _horizontalInput = Input.GetAxis("Horizontal");
         
@@ -83,7 +80,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (!_canMove || _isHurt || _isPaused) return;
+        if (!_canMove || _isHurt ) return;
         
         _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _runTimeMovementData.groundCheckRadius, _runTimeMovementData.groundLayerMask);
         
@@ -91,12 +88,6 @@ public class PlayerController : MonoBehaviour
         var targetVelocity = new Vector2(_horizontalInput * currentSpeed, _rb.linearVelocity.y);
         _rb.linearVelocity = targetVelocity;
     }
-
-    private void OnDestroy()
-    {
-        GameManager.OnPauseToggled -= OnPause;
-    }
-
     private Vector3 GetMouseWorldPosition() // gets rid of camera frustum error
     {
         var mousePos = Input.mousePosition;
@@ -143,10 +134,5 @@ public class PlayerController : MonoBehaviour
         
         Gizmos.color = _isGrounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(_groundCheckPoint.position, _runTimeMovementData.groundCheckRadius);
-    }
-
-    private void OnPause(bool pause)
-    {
-        _isPaused = pause;
     }
 }
