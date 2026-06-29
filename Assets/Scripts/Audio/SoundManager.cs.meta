@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 57e61b3e0c7e75c4ba89ed9db898a758
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - soundEffectsSO: {instanceID: 0}
+  - musicTracksSO: {instanceID: 0}
+  - mixer: {fileID: 24100000, guid: 4045ee372db8ee14c8b9d0902715de2c, type: 2}
+  - soundEffectsSource: {instanceID: 0}
+  - musicSource: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
