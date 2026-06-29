@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyCombat : MonoBehaviour
 {
+    [SerializeField] private EnemyData enemyData;
     private EnemyData _runTimeEnemyData;
     private PlayerHealth _playerHealth;
     private Animator _animator;
