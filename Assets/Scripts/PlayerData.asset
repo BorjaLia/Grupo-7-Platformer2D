@@ -15,13 +15,13 @@ MonoBehaviour:
   playerSpeed: 4
   playerJumpForce: 12
   playerDodgeForce: 15
-  playerHurtForce: 3
+  playerHurtForce: 3.5
   playerAirControlMultiplier: 0.8
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 1024
   maxHealth: 5
-  weaponRange: 0.3
+  weaponRange: 0.4
   damage: 1
   enemyLayer:
     serializedVersion: 2

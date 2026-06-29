@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Player Data")]
     [SerializeField] private PlayerData healthData;
     private PlayerData _runTimeHealthData;
-
+    
     public float maxHealth; 
     public float currentHealth;
     public UnityEvent onDeath;
@@ -45,12 +45,8 @@ public class PlayerHealth : MonoBehaviour
         }
         _playerController.DmgBounce(hitDirection);
         
-        
         if (currentHealth <= 0)
         {
-            _playerLight.enabled = false;
-            _playerSprite.enabled = false;
-            _playerController.enabled = false;
             Death();
         }
     }
@@ -69,11 +65,14 @@ public class PlayerHealth : MonoBehaviour
 
     private void Death()
     {
+        _playerLight.enabled = false;
+        _playerSprite.enabled = false;
+        _playerController.enabled = false;
         onDeath.Invoke();
     }
     public void Respawn()
     {
-        currentHealth = maxHealth;
+         currentHealth = maxHealth;
         _playerLight.enabled = true;
         _playerSprite.enabled = true;
         _playerController.enabled = true;
