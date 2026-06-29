@@ -1,12 +1,17 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Player Data")]
     [SerializeField] private PlayerData healthData;
     private PlayerData _runTimeHealthData;
+    [Header("Canvas Lose Element")] 
+    [SerializeField] private Image image;
+    [SerializeField] private TMP_Text textMeshPro;
     
     public float maxHealth; 
     public float currentHealth;
@@ -16,13 +21,20 @@ public class PlayerHealth : MonoBehaviour
     private PlayerController _playerController;
     private Light2D _playerLight;
     private Animator _animator;
+    private BoxCollider2D _playerCollider;
+    private Rigidbody2D _playerRB;
     
     private void Awake()
     {
+        image.enabled = false;
+        textMeshPro.enabled = false;
+        
         _playerSprite = GetComponent<SpriteRenderer>();
         _playerController = GetComponent<PlayerController>();
         _playerLight = GetComponentInChildren<Light2D>();
         _animator = GetComponent<Animator>();
+        _playerCollider = GetComponent<BoxCollider2D>();
+        _playerRB = GetComponent<Rigidbody2D>();
         
         if (healthData != null)
             _runTimeHealthData = Instantiate(healthData);
@@ -68,6 +80,10 @@ public class PlayerHealth : MonoBehaviour
         _playerLight.enabled = false;
         _playerSprite.enabled = false;
         _playerController.enabled = false;
+        _playerCollider.enabled = false;
+        image.enabled = true;
+        textMeshPro.enabled = true;
+        _playerRB.bodyType = RigidbodyType2D.Static;
         onDeath.Invoke();
     }
     public void Respawn()
