@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public static event Action<bool> OnPauseToggled;
 
     private static bool _isPaused = false;
+    private static bool _gameEnded = false;
 
     private void Start()
     {
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_gameEnded)
         {
             Debug.Log("Pause");
             TogglePause();
@@ -79,5 +80,11 @@ public class GameManager : MonoBehaviour
     public void ExitToMenu()
     {
         SceneManager.LoadScene(_menuScene);
+    }
+
+    public static void EndGame()
+    {
+        TogglePause();
+        _gameEnded = true;
     }
 }

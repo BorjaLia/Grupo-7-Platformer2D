@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   playerSpeed: 8
-  playerJumpForce: 12
+  playerJumpForce: 13.5
   playerDodgeForce: 15
   playerHurtForce: 3.5
   playerAirControlMultiplier: 0.8

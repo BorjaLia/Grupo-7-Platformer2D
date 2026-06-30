@@ -85,6 +85,7 @@ public class PlayerHealth : MonoBehaviour
         textMeshPro.enabled = true;
         _playerRB.bodyType = RigidbodyType2D.Static;
         onDeath.Invoke();
+        GameManager.EndGame();
     }
     public void Respawn()
     {
