@@ -63,6 +63,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void TakeFallDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
+    }
+    
+
     public void Heal(float heal)
     {
         if (currentHealth + heal >= maxHealth)
