@@ -58,6 +58,22 @@ public class EnemyLogic : MonoBehaviour
     {
 
         if (_isPaused) return;
+        
+        if (_currentState == EnemyState.chasing)
+        {
+            if (_target.position.x > transform.position.x && _facingDirection == -1 ||
+                _target.position.x < transform.position.x && _facingDirection == 1)
+            {
+                UpdateFacingDirection();
+            }
+            Vector2 direction = (_target.position - transform.position).normalized;
+            _rb.linearVelocity = direction * _runTimeEnemyData.speed;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isPaused) return;
 
         Vector2 point = _currentPoint.position - transform.position;
         if (_currentState == EnemyState.idle)
@@ -82,27 +98,11 @@ public class EnemyLogic : MonoBehaviour
                 _currentPoint = pointB.transform;
             }
         }
-
-        if (_currentState == EnemyState.chasing)
-        {
-            if (_target.position.x > transform.position.x && _facingDirection == -1 ||
-                _target.position.x < transform.position.x && _facingDirection == 1)
-            {
-                UpdateFacingDirection();
-            }
-            Vector2 direction = (_target.position - transform.position).normalized;
-            _rb.linearVelocity = direction * _runTimeEnemyData.speed;
-        }
     }
 
     private void OnDestroy()
     {
         GameManager.OnPauseToggled -= OnPause;
-    }
-
-    public void DmgBounce(Vector2 direction)
-    {
-        
     }
     
     private void UpdateFacingDirection() // Function That is responsible for switching the sprite and if the character has a light sprite, switch it too 
